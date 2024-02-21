@@ -18,6 +18,9 @@ const loadForecast = async function getForecastWeatherData(key, q, days, celsius
   const name = weatherData.location.name;
   const region = weatherData.location.region;
 
+  // array variable to hold day object data
+  const dayArray = [];
+
   // extract forecast data for each day
   // may want to use an object to store this data, sending an array of each day object to the DOMController 
   weatherData.forecast.forecastday.forEach((day) => {
@@ -25,6 +28,8 @@ const loadForecast = async function getForecastWeatherData(key, q, days, celsius
     // this will need to be reformatted with a date manipulation module like date-fns like so:
     console.log(date.split('-'));
     console.log(format(new Date(date.split('-')), 'EEEE, MMM d y'));
+
+    const formattedDate = format(new Date(date.split('-')), 'EEEE, MMM d y');
 
     let max_temp = null;
     let min_temp = null;
@@ -39,8 +44,10 @@ const loadForecast = async function getForecastWeatherData(key, q, days, celsius
 
     const condition = day.day.condition;
     
-    // console.log(date, max_temp, min_temp, condition);
+    dayArray.push({formattedDate, max_temp, min_temp, condition});
   });
+
+  console.log(name, region, dayArray);
 }
 
 export default loadForecast;

@@ -1,16 +1,18 @@
 * {
   padding: 0;
   margin: 0;
+  box-sizing: border-box
 }
 
 :root{
   --primary-color: #bcf3ff;
   --dark-color: #3188EF;
+  --accent-color: #fff2bc;
   font-size: 16px;
 }
 
 @font-face {
-  font-family: 'header-text';
+  font-family: 'Kanit';
   src: url('./fonts/Kanit-Regular.ttf') format(truetype);
   font-weight: bold;
   font-style: none;
@@ -22,7 +24,7 @@ body{
   display: grid;
   grid-template-rows: 80px 1fr 30px;
 
-  font-family: 'header-text';
+  font-family: 'Kanit';
 }
 
 header{
@@ -30,6 +32,25 @@ header{
   padding: 12px 30px;
   font-size: 2rem;
   display: grid;
+  grid-template-columns: 350px 1fr 60px;
+}
+
+.temp-unit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5rem;
+  grid-column: 3;
+  justify-self: end;
+}
+
+.temp-unit div:hover{
+  color: var(--accent-color);
+  text-shadow: 1px 1px 2px black;
+}
+
+.selected {
+  color: var(--dark-color);
 }
 
 .main-wrapper {
@@ -48,4 +69,28 @@ footer {
 
 footer a{
   color: #efd931;
+}
+
+.user-input {
+  display: flex; 
+  flex-direction: column;
+  gap: 10px;
+  width: clamp(250px, 35%, 370px);
+  margin: auto;
+}
+
+input {
+  height: 30px;
+
+  border-radius: 10px;
+  border: 2px solid var(--dark-color);
+  padding-left: 4px;
+
+  font-family: 'Kanit';
+  font-size: 1rem;
+}
+
+.location {
+  text-align: center;
+  font-size: 1.25rem;
 }
