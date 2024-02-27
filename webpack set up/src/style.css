@@ -1,14 +1,14 @@
 * {
   padding: 0;
   margin: 0;
-  box-sizing: border-box
+  box-sizing: border-box;
 }
 
 :root{
   --primary-color: #bcf3ff;
   --dark-color: #3188EF;
   --accent-color: #fff2bc;
-  font-size: 16px;
+  font-size: clamp(14px, 2.5vw, 18px);
 }
 
 @font-face {
@@ -55,6 +55,12 @@ header{
 
 .main-wrapper {
   background-color: var(--primary-color);
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 footer {
@@ -71,12 +77,33 @@ footer a{
   color: #efd931;
 }
 
+img {
+  height: 80%;
+  width: 80%;
+}
+
+
 .user-input {
   display: flex; 
   flex-direction: column;
   gap: 10px;
   width: clamp(250px, 35%, 370px);
   margin: auto;
+  flex: 0;
+  height: 70px;
+}
+
+.search-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 30px;
+  column-gap: 6px;
+  align-items: center;
+}
+
+.search-wrapper img:hover {
+  filter: invert(85%) sepia(48%) saturate(269%) hue-rotate(336deg) brightness(106%) contrast(103%);
+  height: 90%;
+  width: 90%;
 }
 
 input {
@@ -93,4 +120,8 @@ input {
 .location {
   text-align: center;
   font-size: 1.25rem;
+}
+
+.forecast-wrapper {
+  flex: 1;
 }

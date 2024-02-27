@@ -1,4 +1,5 @@
 import loadForecast from "./loadForecast.js";
+import magGlass from './img/search.svg';
 import './style.css';
 
 const pageLoad = () => {
@@ -28,6 +29,7 @@ const pageLoad = () => {
   const fahrenheit = document.createElement('div');
   fahrenheit.classList.add('temp-fahrenheit');
   fahrenheit.textContent = '°F'
+
   // temp value
   fahrenheit.classList.add('selected');
   const celsius = document.createElement('div');
@@ -59,9 +61,20 @@ const pageLoad = () => {
   const userInputDiv = document.createElement('div');
   userInputDiv.classList.add('user-input');
 
+  const searchDiv = document.createElement('div');
+  searchDiv.classList.add('search-wrapper');
+
+
   const searchBar = document.createElement('input');
   searchBar.setAttribute('type', 'text');
-  
+  searchBar.setAttribute('name', 'query');
+
+  const searchIcon = new Image();
+  searchIcon.src = magGlass;
+
+  searchDiv.appendChild(searchBar);
+  searchDiv.appendChild(searchIcon);
+
   const location = document.createElement('div');
   location.classList.add('location');
 
@@ -69,11 +82,18 @@ const pageLoad = () => {
   location.textContent = 'Pittsburgh, Pennsylvania';
 
   // append to the userInputDiv
-  userInputDiv.appendChild(searchBar);
+  userInputDiv.appendChild(searchDiv);
   userInputDiv.appendChild(location);
 
   // append userInputDiv to the main-wrapper
   main.appendChild(userInputDiv);
+
+  // create the forecast div 
+  const forecastDiv = document.createElement('div');
+  forecastDiv.classList.add('forecast-wrapper');
+
+  // append forecastDiv to main-wrapper
+  main.appendChild(forecastDiv);
 }
 
 export {pageLoad};
