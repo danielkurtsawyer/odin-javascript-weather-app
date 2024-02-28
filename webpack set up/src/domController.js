@@ -1,5 +1,6 @@
 import loadForecast from "./loadForecast.js";
 import magGlass from './img/search.svg';
+import raindrop from './img/raindrop.svg';
 import './style.css';
 
 const pageLoad = () => {
@@ -88,12 +89,66 @@ const pageLoad = () => {
   // append userInputDiv to the main-wrapper
   main.appendChild(userInputDiv);
 
+  // create the display div
+  const forecastDisplay = document.createElement('div');
+  forecastDisplay.classList.add('forecast-display');
+  
+  // append forecastDisplay to main-wrapper
+  main.appendChild(forecastDisplay);
+
   // create the forecast div 
   const forecastDiv = document.createElement('div');
   forecastDiv.classList.add('forecast-wrapper');
 
-  // append forecastDiv to main-wrapper
-  main.appendChild(forecastDiv);
+  // append forecastDiv to forecastDisplay
+  forecastDisplay.appendChild(forecastDiv);
+
+  // create the cards for each individual day - 3 days total
+  for(let i = 0; i<3; i++){
+    // create card
+    const card = document.createElement('div');
+    card.classList.add(`day${i}`);
+
+    // div to hold the date
+    const dateDiv = document.createElement('div');
+    dateDiv.classList.add('date');
+
+    // div to hold the temp
+    const tempDiv = document.createElement('div');
+    tempDiv.classList.add('temp');
+
+    // div to hold the condition div
+    const conditionImg = document.createElement('img');
+    conditionImg.classList.add('condition');
+
+    // wrappere div to hold precipitation
+    const precipitationDiv = document.createElement('div');
+    precipitationDiv.classList.add('precip-wrapper');
+    // img element
+    const precipitationImg = new Image();
+    precipitationImg.src = raindrop;
+    // div to hold the chance of rain
+    const precipitationValue = document.createElement('div');
+    precipitationValue.classList.add('precip');
+
+    // append children to precipitation div
+    precipitationDiv.appendChild(precipitationImg);
+    precipitationDiv.appendChild(precipitationValue);
+
+    // append all children to the main card div
+    card.appendChild(dateDiv);
+    card.appendChild(tempDiv);
+    card.appendChild(conditionImg);
+    card.appendChild(precipitationDiv);
+
+    dateDiv.textContent = 'Thursday, Feb 8 2024';
+    tempDiv.textContent = '54° F';
+    conditionImg.src = raindrop;
+    precipitationValue.textContent = '0%';
+
+    // append card to the forecastDiv
+    forecastDiv.appendChild(card);
+  }
 }
 
 export {pageLoad};
