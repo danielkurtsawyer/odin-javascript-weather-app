@@ -163,19 +163,35 @@ const pageLoad = () => {
   }
 }
 
-const updateWeather = async (query) => {
-  const weatherData = await loadForecast('d2491c9705b6473dba6190239243001', query, 3, false);
+const updateWeather = async (query, celsius) => {
+  const weatherData = await loadForecast('d2491c9705b6473dba6190239243001', query, 3, celsius);
   console.log(weatherData);
 
   const location = document.querySelector('.location');
   location.textContent = `${weatherData.name}, ${weatherData.region}`;
 
-  weatherData.dayArray.forEach((day) => {
+  weatherData.dayArray.forEach((day, index) => {
     // formattedDate, max_temp, min_temp, condition
-    const date = document.querySelector('.date');
-    const tempHigh = document.querySelector('.temp-high');
-    const tempLow = document.querySelector('.temp-low');
-    const conditionImg = document.querySelector('.condition');
+    const date = document.querySelector(`.day${index} .date`);
+    const tempHigh = document.querySelector(`.day${index} .temp-high`);
+    const tempLow = document.querySelector(`.day${index} .temp-low`);
+    const conditionImg = document.querySelector(`.day${index} .condition`);
+    const precipValue = document.querySelector(`.day${index} .precip`);
+
+    date.textContent = day.formattedDate;
+    tempHigh.textContent = day.max_temp;
+    tempLow.textContent = day.min_temp;
+
+    if(celsius){
+      tempHigh.textContent += '° C';
+      tempLow.textContent += '° C';
+    } else {
+      tempHigh.textContent += '° F';
+      tempLow.textContent += '° F';
+    }
+    conditionImg.src = day.condition.icon;
+    conditionImg.alt = day.condition.text; 
+    precipValue.textContent = `${day.precip}%`;
   })
 }
 

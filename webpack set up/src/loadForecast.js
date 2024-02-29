@@ -43,8 +43,10 @@ const extractData = function extractDailyWeatherData(weatherData, celsius){
     }
 
     const condition = day.day.condition;
+
+    const precip = day.day.daily_chance_of_rain;
     
-    dayArray.push({formattedDate, max_temp, min_temp, condition});
+    dayArray.push({formattedDate, max_temp, min_temp, condition, precip});
   });
   
   //console.log(name, region, dayArray);

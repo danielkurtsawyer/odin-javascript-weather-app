@@ -186,6 +186,13 @@ div.day1, div.day2{
 
 .temp {
   font-size: 36px;
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+}
+
+.day1 .temp, .day2 .temp{
+  font-size: 24px;
 }
 
 img.condition{
