@@ -186,13 +186,13 @@ const pageLoad = () => {
 
   // event listener for new query
   searchIcon.addEventListener('click', () => {
-    updateWeather(searchBar.value, celsius.classList.contains('selected'));
+    updateWeather(searchBar.value, celsius.classList.contains('selected'), location.textContent);
     location.textContent = '';
     location.classList.add('loader');
   })
 }
 
-const updateWeather = async (query, celsius) => {
+const updateWeather = async (query, celsius, oldLocation) => {
   const weatherData = await loadForecast('d2491c9705b6473dba6190239243001', query, 3, celsius);
   console.log(weatherData);
 
@@ -202,6 +202,7 @@ const updateWeather = async (query, celsius) => {
   // catch any invalid locations
   if(weatherData === 'error'){
     alert('Please enter a valid location');
+    location.textContent = oldLocation;
     return;
   }
 
