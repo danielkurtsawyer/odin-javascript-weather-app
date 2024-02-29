@@ -167,6 +167,12 @@ const updateWeather = async (query, celsius) => {
   const weatherData = await loadForecast('d2491c9705b6473dba6190239243001', query, 3, celsius);
   console.log(weatherData);
 
+  // catch any invalid locations
+  if(weatherData === 'error'){
+    alert('Please enter a valid location');
+    return;
+  }
+
   const location = document.querySelector('.location');
   location.textContent = `${weatherData.name}, ${weatherData.region}`;
 

@@ -3,3 +3,5 @@ import * as DOMController from "./domController.js";
 
 DOMController.pageLoad();
 DOMController.updateWeather('Pittsburgh', false);
+
+DOMController.updateWeather('hhhhh', false);

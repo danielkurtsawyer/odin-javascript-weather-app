@@ -10,8 +10,13 @@ const loadForecastPromise = function getForecastWeatherDataPromise(key, q, days)
 
 // refactored to use async/await
 const loadForecast = async function getForecastWeatherData(key, q, days, celsius) {
+  console.log(`https://api.weatherapi.com/v1/forecast.json?key=${key}&q=${q}&days=${days}`);
   const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${key}&q=${q}&days=${days}`, {mode: 'cors'});
   const weatherData = await response.json();
+
+  if(weatherData.error){
+    return 'error';
+  }
 
   return extractData(weatherData, celsius);
 }
