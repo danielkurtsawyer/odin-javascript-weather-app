@@ -30,9 +30,8 @@ const pageLoad = () => {
   const fahrenheit = document.createElement('div');
   fahrenheit.classList.add('temp-fahrenheit');
   fahrenheit.textContent = '°F'
-
-  // temp value
   fahrenheit.classList.add('selected');
+
   const celsius = document.createElement('div');
   celsius.classList.add('temp-celsius');
   celsius.textContent = '°C';
@@ -52,7 +51,7 @@ const pageLoad = () => {
   githubLink.href = 'https://github.com/danielkurtsawyer/odin-javascript-weather-app';
   githubLink.textContent = 'GitHub';
   githubLink.setAttribute('target', '_blank');
-  githubLink.setAttribute('rel', 'noopener noreferrer')
+  githubLink.setAttribute('rel', 'noopener noreferrer');
   
   // append to footer
   footer.appendChild(copyright);
@@ -69,6 +68,8 @@ const pageLoad = () => {
   const searchBar = document.createElement('input');
   searchBar.setAttribute('type', 'text');
   searchBar.setAttribute('name', 'query');
+  // Initialize value
+  searchBar.value = 'Pittsburgh';
 
   const searchIcon = new Image();
   searchIcon.src = magGlass;
@@ -78,9 +79,6 @@ const pageLoad = () => {
 
   const location = document.createElement('div');
   location.classList.add('location');
-
-  // temp value
-  // location.textContent = 'Pittsburgh, Pennsylvania';
 
   // append to the userInputDiv
   userInputDiv.appendChild(searchDiv);
@@ -153,19 +151,53 @@ const pageLoad = () => {
     card.appendChild(conditionImg);
     card.appendChild(precipitationDiv);
 
-    // dateDiv.textContent = 'Thursday, Feb 8 2024';
-    // tempDiv.textContent = '54° F';
-    // conditionImg.src = raindrop;
-    // precipitationValue.textContent = '0%';
-
     // append card to the forecastDiv
     forecastDiv.appendChild(card);
   }
+
+  // add event listeners 
+  // event listener for changing temp 
+  fahrenheit.addEventListener('click', () => {
+    if(fahrenheit.classList.contains('selected')){
+      console.log('this choice is already selected. Do nothing');
+    } else {
+      console.log('DO something!');
+      // if the fahrenheit option is not selected already, we have to update the selections
+      celsius.classList.remove('selected');
+      fahrenheit.classList.add('selected');
+
+      // and then we have to update the weather data to find the correct temp unit
+      updateWeather(searchBar.value, false);
+    }
+  });
+  celsius.addEventListener('click', () => {
+    if(celsius.classList.contains('selected')){
+      console.log('this choice is already selected. Do nothing');
+    } else {
+      console.log('DO something!');
+      // if the celsius option is not selected already, we have to update the selections
+      fahrenheit.classList.remove('selected');
+      celsius.classList.add('selected');
+
+      // and then we have to update the weather data to find the correct temp unit
+      updateWeather(searchBar.value, true);
+    }
+  });
+
+  // event listener for new query
+  searchIcon.addEventListener('click', () => {
+    updateWeather(searchBar.value, celsius.classList.contains('selected'));
+    location.textContent = '';
+    location.classList.add('loader');
+  })
 }
 
 const updateWeather = async (query, celsius) => {
   const weatherData = await loadForecast('d2491c9705b6473dba6190239243001', query, 3, celsius);
   console.log(weatherData);
+
+  const location = document.querySelector('.location');
+  location.classList.remove('loader');
 
   // catch any invalid locations
   if(weatherData === 'error'){
@@ -173,7 +205,6 @@ const updateWeather = async (query, celsius) => {
     return;
   }
 
-  const location = document.querySelector('.location');
   location.textContent = `${weatherData.name}, ${weatherData.region}`;
 
   weatherData.dayArray.forEach((day, index) => {
