@@ -1,4 +1,4 @@
-import loadForecast from "./loadForecast.js";
+import {loadForecast} from "./loadForecast.js";
 import magGlass from './img/search.svg';
 import raindrop from './img/raindrop.svg';
 import './style.css';
@@ -80,7 +80,7 @@ const pageLoad = () => {
   location.classList.add('location');
 
   // temp value
-  location.textContent = 'Pittsburgh, Pennsylvania';
+  // location.textContent = 'Pittsburgh, Pennsylvania';
 
   // append to the userInputDiv
   userInputDiv.appendChild(searchDiv);
@@ -117,6 +117,18 @@ const pageLoad = () => {
     const tempDiv = document.createElement('div');
     tempDiv.classList.add('temp');
 
+    // div to hold the low
+    const tempLow = document.createElement('div');
+    tempLow.classList.add('temp-low');
+
+    // div to hold the hi
+    const tempHigh = document.createElement('div');
+    tempHigh.classList.add('temp-high');
+
+    // append children to tempdiv
+    tempDiv.appendChild(tempLow);
+    tempDiv.appendChild(tempHigh);
+    
     // div to hold the condition div
     const conditionImg = document.createElement('img');
     conditionImg.classList.add('condition');
@@ -141,14 +153,30 @@ const pageLoad = () => {
     card.appendChild(conditionImg);
     card.appendChild(precipitationDiv);
 
-    dateDiv.textContent = 'Thursday, Feb 8 2024';
-    tempDiv.textContent = '54° F';
-    conditionImg.src = raindrop;
-    precipitationValue.textContent = '0%';
+    // dateDiv.textContent = 'Thursday, Feb 8 2024';
+    // tempDiv.textContent = '54° F';
+    // conditionImg.src = raindrop;
+    // precipitationValue.textContent = '0%';
 
     // append card to the forecastDiv
     forecastDiv.appendChild(card);
   }
 }
 
-export {pageLoad};
+const updateWeather = async (query) => {
+  const weatherData = await loadForecast('d2491c9705b6473dba6190239243001', query, 3, false);
+  console.log(weatherData);
+
+  const location = document.querySelector('.location');
+  location.textContent = `${weatherData.name}, ${weatherData.region}`;
+
+  weatherData.dayArray.forEach((day) => {
+    // formattedDate, max_temp, min_temp, condition
+    const date = document.querySelector('.date');
+    const tempHigh = document.querySelector('.temp-high');
+    const tempLow = document.querySelector('.temp-low');
+    const conditionImg = document.querySelector('.condition');
+  })
+}
+
+export {pageLoad, updateWeather};
